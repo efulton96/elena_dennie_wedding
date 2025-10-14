@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Wedding Demo</title>
+    <!-- React/ReactDOM UMD builds -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for in-browser JSX transform (dev only) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      /* Consolidated minimal utility CSS so the demo is readable without Tailwind */
+      html,body,#root{height:100%;}
+      body{margin:0;font-family:'Josefin Sans','Lora',sans-serif;background:#fff8f0;color:#1a1e23;-webkit-font-smoothing:antialiased}
+
+      /* Containers */
+      .min-h-screen{min-height:100vh}
+      .max-w-6xl{max-width:1152px;margin-left:auto;margin-right:auto}
+      .max-w-5xl{max-width:960px;margin-left:auto;margin-right:auto}
+      .max-w-2xl{max-width:720px}
+      .mx-auto{margin-left:auto;margin-right:auto}
+      .px-4{padding-left:1rem;padding-right:1rem}
+      .py-3{padding-top:.75rem;padding-bottom:.75rem}
+
+      /* Layout helpers */
+      .flex{display:flex}
+      .inline-flex{display:inline-flex}
+      .items-center{align-items:center}
+      .justify-between{justify-content:space-between}
+      .justify-end{justify-content:flex-end}
+      .gap-6{gap:1.5rem}
+      .gap-4{gap:1rem}
+      .gap-3{gap:.75rem}
+      .flex-1{flex:1}
+
+      /* Grid */
+      .grid{display:grid}
+      .md\:grid-cols-2{grid-template-columns:repeat(2,1fr)}
+      .md\:grid-cols-3{grid-template-columns:repeat(3,1fr)}
+      .sm\:grid-cols-2{grid-template-columns:repeat(2,1fr)}
+
+      /* Typography */
+      .text-white{color:#fff}
+      .text-white\/90{color:rgba(255,255,255,0.9)}
+      .text-4xl{font-size:2rem}
+      .md\:text-6xl{font-size:3.5rem}
+      .text-6xl{font-size:3.5rem}
+      .text-lg{font-size:1.125rem}
+      .md\:text-xl{font-size:1.25rem}
+      .text-2xl{font-size:1.5rem}
+      .md\:text-3xl{font-size:1.875rem}
+      .font-semibold{font-weight:600}
+      .font-normal{font-weight:400}
+      .text-sm{font-size:.9rem}
+      .tracking-wide{letter-spacing:0.02em}
+      .tracking-tight{letter-spacing:-0.02em}
+
+      /* Spacing */
+      .mt-3{margin-top:.75rem}
+      .mb-2{margin-bottom:.5rem}
+      .mb-8{margin-bottom:2rem}
+      .pb-12{padding-bottom:3rem}
+
+      /* Misc */
+      .rounded{border-radius:6px}
+      .rounded-xl{border-radius:12px}
+      .rounded-2xl{border-radius:16px}
+      .rounded-3xl{border-radius:24px}
+      .p-4{padding:1rem}
+      .px-3{padding-left:.75rem;padding-right:.75rem}
+      .py-2{padding-top:.5rem;padding-bottom:.5rem}
+      .bg-white\/95{background:rgba(255,255,255,0.95)}
+      .border{border:1px solid #eee}
+      .border-black\/10{border-color:rgba(0,0,0,0.1)}
+      .hidden{display:none}
+      .md\:flex{display:flex}
+      .md\:inline-flex{display:inline-flex}
+
+      /* Positioning & header */
+      .sticky{position:sticky}
+      .top-0{top:0}
+      .z-40{z-index:40}
+      .absolute{position:absolute}
+      .relative{position:relative}
+      .inset-0{top:0;left:0;right:0;bottom:0}
+      .-top-6{top:-1.5rem}
+      .-left-6{left:-1.5rem}
+      .-bottom-6{bottom:-1.5rem}
+      .-right-6{right:-1.5rem}
+      .w-full{width:100%}
+      .w-24{width:6rem}
+      .w-28{width:7rem}
+      .h-28{height:7rem}
+      .h-px{height:1px}
+  .h-56{height:14rem}
+  .h-\[60vh\]{height:70vh}
+  .md\:h-\[75vh\]{height:85vh}
+      .flex-col{flex-direction:column}
+
+      /* shadows, rings, strokes */
+      .shadow{box-shadow:0 6px 14px rgba(0,0,0,0.06)}
+      .shadow-sm{box-shadow:0 4px 8px rgba(0,0,0,0.06)}
+      .drop-shadow-md{text-shadow:0 6px 18px rgba(0,0,0,0.25)}
+      .ring-1{box-shadow:0 0 0 1px rgba(0,0,0,0.05) inset}
+      .ring-black\/5{box-shadow:0 0 0 1px rgba(0,0,0,0.05)}
+
+      /* borders and subtle colors */
+      .border-b{border-bottom:1px solid #eee}
+
+      /* opacity helpers */
+      .opacity-80{opacity:0.8}
+      .opacity-90{opacity:0.9}
+      .opacity-70{opacity:0.7}
+      .opacity-20{opacity:0.2}
+
+      /* small helpers */
+      .block{display:block}
+      .max-w-prose{max-width:60ch}
+      .inline-block{display:inline-block}
+
+      /* Buttons */
+      button{cursor:pointer}
+      .btn-primary,
+      a.btn-primary,
+      button.btn-primary,
+      .rsvp,
+      .rsvp-btn {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+      }
+      .rsvp *,
+      .rsvp-btn *,
+      .btn-primary * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+      }
+
+      /* Nav tweaks so links don't appear blue and crammed - inherit text color from parent */
+      nav{display:flex;align-items:center}
+      a{color:inherit;text-decoration:none}
+      nav a{margin-left:.75rem;margin-right:.75rem}
+      nav a, nav a:visited, nav a:active, nav a:hover {
+        color: inherit !important;
+      }
+      nav a[href], nav a[href="/"], nav a.home {
+        color: inherit !important;
+      }
+
+      /* Cover common active/current states that may use non-<a> elements */
+      nav [aria-current="page"],
+      nav .active,
+      nav .current,
+      nav .selected,
+      nav .tab,
+      nav .tab.active,
+      nav button,
+      nav span { color: inherit !important; }
+
+
+      /* Set tab text color to match RSVP button except for the RSVP itself */
+      nav a:not(.btn-primary):not(.rsvp):not(.rsvp-btn),
+      nav a:not(.btn-primary):not(.rsvp):not(.rsvp-btn):visited,
+      nav a:not(.btn-primary):not(.rsvp):not(.rsvp-btn):hover,
+      nav a:not(.btn-primary):not(.rsvp):not(.rsvp-btn):active,
+      .sticky.top-0 *:not(.btn-primary):not(.rsvp):not(.rsvp-btn) {
+        color: #1F4C49 !important;
+        -webkit-text-fill-color: #1F4C49 !important;
+      }
+
+      /* RSVP ONLY: keep the RSVP control white regardless of inherited styles */
+      .sticky.top-0 a.btn-primary,
+      .sticky.top-0 button.btn-primary,
+      .sticky.top-0 .rsvp,
+      .sticky.top-0 .rsvp-btn,
+      .sticky.top-0 a[href*="rsvp" i],
+      .sticky.top-0 button[aria-label*="rsvp" i],
+      .sticky.top-0 [data-nav="rsvp"] {
+        color:#ffffff !important;
+        -webkit-text-fill-color:#ffffff !important;
+      }
+
+      /* RSVP ONLY (descendants too) */
+      .sticky.top-0 .rsvp,
+      .sticky.top-0 .rsvp *,
+      .sticky.top-0 .rsvp-btn,
+      .sticky.top-0 .rsvp-btn *,
+      .sticky.top-0 a.btn-primary,
+      .sticky.top-0 a.btn-primary *,
+      .sticky.top-0 button.btn-primary,
+      .sticky.top-0 button.btn-primary *,
+      .sticky.top-0 a[href*="rsvp" i],
+      .sticky.top-0 a[href*="rsvp" i] *,
+      .sticky.top-0 button[aria-label*="rsvp" i],
+      .sticky.top-0 button[aria-label*="rsvp" i] * {
+        color:#ffffff !important;
+        -webkit-text-fill-color:#ffffff !important;
+      }
+
+      :root {
+        --nouveau-ivory: #fff8f0;
+        --nouveau-deep: #1F4C49;
+        --nouveau-forest: #123417;
+        --nouveau-wine: #461326;
+        --nouveau-gold: #d9a73c;
+        --nouveau-rose: #f3d1c9;
+      }
+
+      /* Make the top tabs banner ornate and elevated */
+      .sticky.top-0 {
+        position: sticky;
+        z-index: 1000;
+        background: linear-gradient(180deg, rgba(255, 248, 240, 0.95) 0%, rgba(255, 248, 240, 0.85) 65%, rgba(255, 248, 240, 0.92) 100%) !important;
+        box-shadow: 0 10px 25px rgba(31, 76, 73, 0.14);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(70, 19, 38, 0.08);
+      }
+      .sticky.top-0::after {
+        content: "";
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        bottom: -6px;
+        height: 12px;
+        background: radial-gradient(circle at center, rgba(70,19,38,0.12), transparent 65%);
+        filter: blur(6px);
+        pointer-events: none;
+      }
+      .sticky.top-0 .bg-white\/95 { background: transparent !important; }
+      .nav-links a {
+        position: relative;
+        padding: 0.35rem 0.25rem;
+        transition: color 180ms ease;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        right: 5px;
+        bottom: -6px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(70,19,38,0.65), transparent);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 200ms ease;
+      }
+      .nav-links a:hover::after,
+      .nav-links a:focus-visible::after {
+        transform: scaleX(1);
+      }
+      /* Decorative section container */
+      .section-shell {
+        position: relative;
+      }
+      .section-shell::before,
+      .section-shell::after {
+        content: "";
+        position: absolute;
+        inset: 24px;
+        border: 1px solid rgba(31, 76, 73, 0.08);
+        border-radius: 32px;
+        pointer-events: none;
+      }
+      .section-shell::after {
+        inset: 36px;
+        border-color: rgba(70, 19, 38, 0.08);
+        filter: blur(0.2px);
+      }
+      .section-inner {
+        position: relative;
+        z-index: 1;
+        padding: 0.5rem 0 1.5rem;
+      }
+      .section-heading {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 999px;
+        background: rgba(255, 248, 240, 0.85);
+        box-shadow: inset 0 0 0 1px rgba(31, 76, 73, 0.12), 0 6px 20px rgba(31, 76, 73, 0.12);
+        font-size: 1.45rem;
+        font-weight: 700;
+      }
+      .section-heading::before,
+      .section-heading::after {
+        content: "";
+        width: 32px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(70, 19, 38, 0.4), transparent);
+      }
+      .section-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(31,76,73,0.35), transparent);
+        margin: 2rem auto;
+      }
+
+      /* Gallery tweaks */
+      .gallery-grid {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 600px) {
+        .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (min-width: 900px) {
+        .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      }
+      .gallery-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+        box-shadow: 0 15px 35px rgba(31, 76, 73, 0.18);
+        background: rgba(255,248,240,0.65);
+        transition: transform 220ms ease, box-shadow 220ms ease;
+        aspect-ratio: 4 / 5;
+      }
+      .gallery-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 320ms ease;
+      }
+      .gallery-card figcaption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 1rem 1.25rem;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(31,76,73,0.65) 95%);
+        color: #fff8f0;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 240ms ease, transform 240ms ease;
+      }
+      .gallery-card::after {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border: 1px solid rgba(255,248,240,0.5);
+        border-radius: 22px;
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+      .gallery-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 25px 45px rgba(31, 76, 73, 0.22);
+      }
+      .gallery-card:hover img { transform: scale(1.08); }
+      .gallery-card:hover::after { opacity: 1; }
+      .gallery-card:hover figcaption {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .photo-frame {
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+        box-shadow: 0 20px 32px rgba(31,76,73,0.18);
+        background: rgba(255,248,240,0.7);
+        transition: transform 220ms ease, box-shadow 220ms ease;
+      }
+      .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 320ms ease;
+      }
+      .photo-frame:hover {
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 28px 46px rgba(31,76,73,0.25);
+      }
+      .photo-frame:hover img {
+        transform: scale(1.05);
+      }
+
+      .page-ornament {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 120px;
+        pointer-events: none;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 6;
+        opacity: 0.18;
+      }
+      @media (min-width: 640px) {
+        .page-ornament { opacity: 0.24; width: 150px; }
+      }
+      @media (min-width: 1024px) {
+        .page-ornament { opacity: 0.28; width: 180px; }
+      }
+      .page-ornament.left {
+        left: -40px;
+        background-image: url('img/side_leaf.png');
+        background-position: center left;
+      }
+      .page-ornament.right {
+        right: -40px;
+        background-image: url('img/side_leaf_2.png');
+        background-position: center right;
+      }
+
+      .travel-grid {
+        display: grid;
+        gap: 1.75rem;
+      }
+      @media (min-width: 960px) {
+        .travel-grid { grid-template-columns: 1.15fr 1fr; align-items: stretch; }
+      }
+      .travel-hero {
+        position: relative;
+        min-height: 18rem;
+      }
+      .travel-hero-overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 1.5rem 2rem;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(31,76,73,0.78) 100%);
+        color: #fff8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        letter-spacing: 0.04em;
+      }
+      .travel-hero-overlay span:first-child {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+      .travel-hero-overlay strong {
+        font-size: 1.4rem;
+        font-family: 'Italiana','Lora',serif;
+      }
+      .travel-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .travel-card {
+        background: rgba(255,248,240,0.82);
+        border-radius: 26px;
+        padding: 1.5rem 1.75rem;
+        box-shadow: 0 15px 28px rgba(31,76,73,0.16);
+        backdrop-filter: blur(4px);
+        border: 2px solid rgba(217, 167, 60, 0.65);
+      }
+      .travel-card header {
+        font-family: 'Italiana','Lora',serif;
+        font-size: 1.35rem;
+        margin-bottom: 0.85rem;
+        letter-spacing: 0.04em;
+        color: var(--nouveau-deep);
+        font-weight: 700;
+      }
+      .travel-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.85rem;
+      }
+      .travel-step {
+        display: grid;
+        gap: 0.25rem;
+      }
+      .travel-step-title {
+        font-weight: 600;
+        color: var(--nouveau-wine);
+      }
+      .travel-icons {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+      }
+      .travel-tag {
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(31,76,73,0.12);
+        color: var(--nouveau-deep);
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .accommodations-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+      @media (min-width: 900px) {
+        .accommodations-grid { grid-template-columns: 1.1fr 0.9fr; }
+      }
+      .stay-card {
+        background: rgba(255,248,240,0.88);
+        border-radius: 28px;
+        padding: 1.75rem 2rem;
+        box-shadow: 0 18px 32px rgba(70,19,38,0.18);
+      }
+     .stay-card header {
+       font-family: 'Italiana','Lora',serif;
+       font-size: 1.5rem;
+       letter-spacing: 0.05em;
+       margin-bottom: 1rem;
+       color: var(--nouveau-deep);
+       font-weight: 700;
+     }
+      .venue-feature {
+        background: var(--nouveau-deep);
+        border-radius: 26px;
+        border: 2px solid rgba(255,248,240,0.4);
+        padding: 1.4rem 1.75rem;
+        box-shadow: 0 18px 32px rgba(31, 76, 73, 0.28);
+        display: grid;
+        gap: 1rem;
+        color: #fff8f0;
+        text-align: center;
+        justify-items: center;
+      }
+      .venue-feature header {
+        font-family: 'Italiana','Lora',serif;
+        font-size: 1.8rem;
+        letter-spacing: 0.05em;
+        color: #fff8f0;
+        font-weight: 700;
+      }
+      .venue-feature p {
+        margin: 0;
+        font-size: 1.02rem;
+        line-height: 1.55;
+        max-width: 44ch;
+      }
+      .detail-grid {
+        display: grid;
+        gap: 2.5rem;
+        padding-top: 1.5rem;
+      }
+      @media (min-width: 900px) {
+        .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      .detail-card {
+        background: rgba(255,248,240,0.85);
+        border-radius: 24px;
+        padding: 1.5rem 1.75rem;
+        box-shadow: 0 16px 28px rgba(31,76,73,0.16);
+        display: grid;
+        gap: 1rem;
+        text-align: center;
+      }
+      .detail-card header {
+        font-family: 'Italiana','Lora',serif;
+        font-size: 1.6rem;
+        letter-spacing: 0.05em;
+        color: var(--nouveau-wine);
+        font-weight: 700;
+      }
+      .stay-features {
+        display: grid;
+        gap: 0.85rem;
+        font-size: 0.95rem;
+      }
+      .stay-feature {
+        display: flex;
+        gap: 0.65rem;
+        align-items: flex-start;
+      }
+      .stay-feature span:first-child {
+        font-size: 1.1rem;
+      }
+      .stay-secondary {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .stay-secondary .photo-frame {
+        min-height: 14rem;
+      }
+
+      /* Schedule timeline */
+      .timeline {
+        position: relative;
+        display: grid;
+        gap: 2.2rem;
+        padding: 1.5rem 0 1.5rem 0;
+        --time-col: 160px;
+        --axis-width: 36px;
+        --timeline-pad: 42px;
+      }
+      .timeline-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: var(--time-col) var(--axis-width) minmax(0, 1fr);
+        align-items: center;
+        gap: 1.6rem;
+        padding: 0 1rem;
+      }
+      .timeline-track {
+        content: "";
+        position: absolute;
+        top: 1rem;
+        bottom: 1rem;
+        left: calc(var(--timeline-pad) + var(--time-col) + (var(--axis-width) / 2) - 1.5px);
+        width: 3px;
+        background: linear-gradient(180deg, rgba(31,76,73,0.45), rgba(70,19,38,0.2));
+        z-index: 0;
+      }
+      .timeline-node {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--nouveau-wine), var(--nouveau-gold));
+        box-shadow: 0 0 0 6px rgba(70,19,38,0.1);
+        margin: 0 auto;
+        z-index: 1;
+      }
+      .timeline-time {
+        font-family: 'Italiana','Lora',serif;
+        font-size: 1.6rem;
+        letter-spacing: 0.08em;
+        color: var(--nouveau-deep);
+        text-align: right;
+        font-weight: 700;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 100%;
+      }
+      .timeline-detail {
+        background: rgba(70,19,38,0.88);
+        border-radius: 18px;
+        box-shadow: 0 15px 32px rgba(70,19,38,0.2);
+        padding: 1.05rem 1.4rem;
+        min-height: 96px;
+        display: grid;
+        gap: 0.5rem;
+        color: #fff8f0;
+      }
+      .timeline-detail h4 {
+        margin: 0;
+        font-family: 'Italiana','Lora',serif;
+        font-size: 1.35rem;
+        letter-spacing: 0.05em;
+        color: #fff8f0;
+      }
+      .timeline-detail p {
+        margin: 0;
+        font-size: 0.92rem;
+        line-height: 1.48;
+        color: rgba(255,248,240,0.9);
+      }
+      @media (max-width: 640px) {
+        .timeline {
+          --time-col: 100px;
+          --axis-width: 28px;
+          --timeline-pad: 12px;
+        }
+        .timeline-item {
+          grid-template-columns: var(--time-col) var(--axis-width) minmax(0,1fr);
+          gap: 1rem;
+          padding-left: 0.75rem;
+        }
+        .timeline-track {
+          left: calc(var(--timeline-pad) + var(--time-col) + (var(--axis-width) / 2) - 1.5px);
+        }
+        .timeline-time {
+          justify-content: flex-end;
+        }
+      }
+
+      /* Hover lift for cards */
+      .lift-card {
+        transition: transform 220ms ease, box-shadow 220ms ease;
+      }
+      .lift-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 32px rgba(31, 76, 73, 0.2);
+      }
+
+      /* Text accents */
+      .nouveau-script {
+        font-family: 'Italiana','Lora',serif;
+        letter-spacing: 0.04em;
+      }
+
+      /* utility for subtle underline */
+      .underline{text-decoration:underline}
+
+      /* basic fadeIn animation used by App.jsx */
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+
+    <style>
+      /* Ensure hero image covers the header without distortion and make the hero taller */
+      header#top {
+        position: relative !important;
+        overflow: hidden;
+        margin-top: 0 !important;
+        z-index: 1;
+        min-height: var(--hero-height-mobile, 80vh);
+        height: var(--hero-height-mobile, 80vh);
+        background: #fff8f0 !important;
+      }
+      @media (min-width: 768px) {
+        header#top {
+          min-height: var(--hero-height-desktop, 100vh);
+          height: var(--hero-height-desktop, 100vh);
+        }
+      }
+      header#top .hero-inner {
+        min-height: 100%;
+        height: 100%;
+      }
+      header#top .hero-media {
+        position: absolute;
+        inset: 0;
+        transform-origin: var(--hero-transform-origin, center);
+        transform: translate(var(--hero-translate-x, 0%), var(--hero-translate-y, 0%)) scale(var(--hero-scale, 1));
+        transition: transform 240ms ease;
+        background: #fff8f0;
+      }
+      header#top .hero-media .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover !important;
+        object-position: var(--hero-object-position, center bottom) !important;
+        display: block;
+      }
+      header#top .hero-overlay {
+        pointer-events: none;
+      }
+    </style>
+
+      <!-- Preload fonts used by the original layout to better match typography -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Josefin+Sans:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+      <div id="root"></div>
+
+      <!-- Small runtime bootstrap to show errors on the page if JS fails -->
+      <script>
+        (function(){
+          function setFallback(msg){
+            try{const root=document.getElementById('root'); if(root) root.innerHTML = '<div style="padding:2rem;font-family:system-ui,Arial,Helvetica,sans-serif;color:#a00;background:#fff6f6;border:1px solid #f4caca;border-radius:8px;max-width:900px;margin:2rem auto;">'+
+              '<strong>Demo failed to load JavaScript</strong><div style="margin-top:.5rem;font-size:.95rem;">'+(msg||'See console for details.')+'</div></div>';}
+            catch(e){console.error('fallback write failed',e)}
+          }
+          window.addEventListener('error', function(ev){
+            console.error('Runtime error captured', ev.error || ev.message || ev);
+            setFallback((ev && (ev.error && ev.error.message)) || ev.message || String(ev));
+          });
+          window.addEventListener('unhandledrejection', function(ev){
+            console.error('Unhandled promise rejection', ev.reason);
+            setFallback('Unhandled promise rejection: '+((ev.reason && ev.reason.message) || String(ev.reason)));
+          });
+          // minimal sanity note so you know JS ran up to this point
+          console.info('Demo bootstrap loaded — Babel and App.jsx will follow');
+        })();
+      </script>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function(){
+          try {
+            // Detect a sticky header (if present) and push the hero down so it isn't hidden underneath
+            var sticky = document.querySelector('.sticky.top-0');
+            var hero = document.querySelector('header#top');
+            if (sticky && hero) {
+              var h = sticky.getBoundingClientRect().height || sticky.offsetHeight || 64;
+              document.documentElement.style.setProperty('--sticky-h', h + 'px');
+              hero.style.paddingBottom = '0px';
+            }
+
+            // Ensure RSVP element is explicitly tagged so CSS can force white text
+            function tagRSVP(root){
+              if(!root) return false;
+              var candidates = root.querySelectorAll('a,button,span,div');
+              var tagged = false;
+              candidates.forEach(function(el){
+                var t = (el.textContent || '').trim().toLowerCase();
+                if (t === 'rsvp' || /\brsvp\b/.test(t)) {
+                  el.classList.add('rsvp');
+                  tagged = true;
+                }
+              });
+              return tagged;
+            }
+            var stickyRoot = document.querySelector('.sticky.top-0');
+            if (stickyRoot && !tagRSVP(stickyRoot)) {
+              // React may render after DOMContentLoaded; observe briefly
+              var mo = new MutationObserver(function(){
+                if (tagRSVP(stickyRoot)) mo.disconnect();
+              });
+              mo.observe(stickyRoot, {subtree:true, childList:true, characterData:true});
+              // Safety: disconnect after a short window
+              setTimeout(function(){ try{ mo.disconnect(); }catch(_){} }, 4000);
+            }
+          } catch (e) { console.warn('sticky header adjustment skipped:', e); }
+        });
+      </script>
+      <script type="text/babel" data-presets="env,react" src="App.jsx"></script>
+    </body>
+  </html>
