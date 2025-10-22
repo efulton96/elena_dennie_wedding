@@ -12,7 +12,14 @@
     <style>
       /* Consolidated minimal utility CSS so the demo is readable without Tailwind */
       html,body,#root{height:100%;}
-      body{margin:0;font-family:'Josefin Sans','Lora',sans-serif;background:#fff8f0;color:#1a1e23;-webkit-font-smoothing:antialiased}
+      body{
+        margin:0;
+        font-family:'Lora','Josefin Sans',serif;
+        background:var(--nouveau-ivory);
+        color:#1a1e23;
+        line-height:1.6;
+        -webkit-font-smoothing:antialiased
+      }
 
       /* Containers */
       .min-h-screen{min-height:100vh}
@@ -94,8 +101,8 @@
       .h-28{height:7rem}
       .h-px{height:1px}
   .h-56{height:14rem}
-  .h-\[60vh\]{height:70vh}
-  .md\:h-\[75vh\]{height:85vh}
+  .h-\[60vh\]{height:60vh}
+  .md\:h-\[75vh\]{height:75vh}
       .flex-col{flex-direction:column}
 
       /* shadows, rings, strokes */
@@ -163,7 +170,7 @@
       nav a:not(.btn-primary):not(.rsvp):not(.rsvp-btn):visited,
       nav a:not(.btn-primary):not(.rsvp):not(.rsvp-btn):hover,
       nav a:not(.btn-primary):not(.rsvp):not(.rsvp-btn):active,
-      .sticky.top-0 *:not(.btn-primary):not(.rsvp):not(.rsvp-btn) {
+      .sticky.top-0 *:not(.btn-primary):not(.rsvp):not(.rsvp-btn):not([aria-current="page"]) {
         color: #1F4C49 !important;
         -webkit-text-fill-color: #1F4C49 !important;
       }
@@ -198,13 +205,126 @@
       }
 
       :root {
-        --nouveau-ivory: #fff8f0;
-        --nouveau-deep: #1F4C49;
-        --nouveau-forest: #123417;
-        --nouveau-wine: #461326;
-        --nouveau-gold: #d9a73c;
-        --nouveau-rose: #f3d1c9;
+        /* Core palette – rich jewel tones */
+        --nouveau-ivory: #fff8f0;   /* soft ivory background */
+        --nouveau-ink: #1a1e23;     /* primary text */
+        --nouveau-deep: #1F4C49;    /* deep teal (brand) */
+        --nouveau-emerald: #0f6a5b; /* richer green accent */
+        --nouveau-sapphire: #0c3c78;/* blue accent */
+        --nouveau-amethyst: #4b2e83;/* purple accent */
+        --nouveau-garnet: #5a0e2e;  /* wine-plum accent */
+        --nouveau-wine: #461326;    /* deep wine (active accents) */
+        --nouveau-gold: #caa45a;    /* soft gold (timeline nodes) */
+
+        /* Neutrals & surfaces */
+        --nouveau-ivory-veil: rgba(255, 248, 240, 0.9);
+        --nouveau-ink-soft: rgba(26,30,35,0.85);
+        --surface-glass: rgba(255,248,240,0.82);
+        --line-deep: rgba(31, 76, 73, 0.12);
+        --line-wine: rgba(70, 19, 38, 0.10);
+
+        /* Shadows & radii */
+        --shadow-soft: 0 10px 25px rgba(31, 76, 73, 0.14);
+        --shadow-lift: 0 18px 32px rgba(31, 76, 73, 0.22);
+        --radius-lg: 28px;
+        --radius-xl: 32px;
+
+        /* Type scale */
+        --h1: clamp(2.4rem, 2.2rem + 1.5vw, 3.4rem);
+        --h2: clamp(1.8rem, 1.6rem + 1.1vw, 2.4rem);
+        --h3: clamp(1.4rem, 1.3rem + 0.7vw, 1.8rem);
+        --lead: 1.15rem;
       }
+      
+      /* Typography – elegant, readable, vintage */
+      h1,h2,h3,h4{
+        font-family:'Italiana','Lora',serif;
+        color:var(--nouveau-ink);
+        letter-spacing:.01em;
+        margin:0 0 .35em;
+      }
+      h1{font-size:var(--h1); line-height:1.08;}
+      h2{font-size:var(--h2); line-height:1.12;}
+      h3{font-size:var(--h3); line-height:1.18;}
+      .lead{font-size:var(--lead); color:var(--nouveau-ink-soft);}
+      .eyebrow{ text-transform:uppercase; letter-spacing:.14em; font-size:.82rem; color:var(--nouveau-garnet); font-weight:600; }
+
+      /* Links – subtle Nouveau underline */
+      a:not(.btn-primary){
+        text-decoration:none;
+        background-image:linear-gradient(transparent,transparent),
+                        linear-gradient(90deg, transparent, var(--nouveau-garnet), transparent);
+        background-size:100% 1px, 0 1px;
+        background-position:0 100%, 0 100%;
+        background-repeat:no-repeat;
+        transition:background-size 200ms ease, color 150ms ease;
+      }
+      a:not(.btn-primary):hover,
+      a:not(.btn-primary):focus-visible{
+        background-size:0 1px, 100% 1px;
+        color:var(--nouveau-deep);
+        outline:none;
+      }
+
+      /* Buttons – primary & outline (RSVP uses primary) */
+      .btn-primary{
+        background:var(--nouveau-deep) !important;
+        border:1px solid rgba(255,255,255,0.22);
+        padding:.6rem 1rem;
+        border-radius:999px;
+        box-shadow:0 8px 18px rgba(31,76,73,0.28);
+        font-weight:600;
+        letter-spacing:.04em;
+      }
+      .btn-primary:hover{ filter:brightness(1.05); box-shadow:0 10px 22px rgba(31,76,73,0.32); }
+      .btn-outline{
+        background:transparent; color:var(--nouveau-deep);
+        border:1px solid var(--nouveau-deep);
+        border-radius:999px; padding:.55rem .95rem;
+        font-weight:600; letter-spacing:.04em;
+      }
+      .btn-outline:hover{ background:rgba(31,76,73,0.06); }
+
+      /* Ensure RSVP text stays white even when nesting spans/icons */
+      .btn-primary, a.btn-primary, button.btn-primary, .rsvp, .rsvp-btn{ color:#fff !important; -webkit-text-fill-color:#fff !important; }
+      .btn-primary *,.rsvp *,.rsvp-btn *{ color:#fff !important; -webkit-text-fill-color:#fff !important; }
+      .btn-primary:hover *,.rsvp:hover *{ color:#fff !important; -webkit-text-fill-color:#fff !important; }
+
+      /* Focus & selection */
+      :focus-visible{ outline:2px dashed var(--nouveau-amber); outline-offset:3px; }
+      ::selection{ background:rgba(31,76,73,0.18); color:var(--nouveau-ink); }
+
+      /* Sections & cards – refined borders/shadows */
+      .section-shell::before{ border-color:var(--line-deep); }
+      .section-shell::after{ border-color:var(--line-wine); }
+      .section-heading{
+        background:rgba(255,248,240,0.9);
+        box-shadow:inset 0 0 0 1px var(--line-deep), 0 6px 20px rgba(31,76,73,0.12);
+      }
+      .gallery-card,.stay-card,.detail-card,.travel-card{
+        border-radius:var(--radius-lg); box-shadow:var(--shadow-lift);
+      }
+
+      /* Nav polish */
+      .sticky.top-0{ box-shadow:var(--shadow-soft); }
+      .nav-links a{ letter-spacing:.06em; font-weight:600; }
+      .nav-links a[aria-current="page"]{ color:var(--nouveau-garnet) !important; }
+      .nav-links a[aria-current="page"]::after{
+        transform:scaleX(1);
+        background:linear-gradient(90deg,transparent,var(--nouveau-garnet),transparent);
+      }
+
+      /* Optional ornate frame utility (apply to any image wrapper) */
+      .frame-nouveau{
+        position:relative; border-radius:24px;
+        background:rgba(255,248,240,0.65);
+        box-shadow:0 16px 28px rgba(31,76,73,0.2);
+      }
+      .frame-nouveau::before,.frame-nouveau::after{
+        content:""; position:absolute; inset:10px; border-radius:20px; pointer-events:none;
+      }
+      .frame-nouveau::before{ border:1px solid rgba(31,76,73,0.18); }
+      .frame-nouveau::after{ inset:18px; border:1px solid rgba(70,19,38,0.16); }
 
       /* Make the top tabs banner ornate and elevated */
       .sticky.top-0 {
@@ -702,7 +822,7 @@
       header#top {
         position: relative !important;
         overflow: hidden;
-        margin-top: 0 !important;
+        margin-top: var(--sticky-h, 0px);
         z-index: 1;
         min-height: var(--hero-height-mobile, 80vh);
         height: var(--hero-height-mobile, 80vh);
@@ -733,8 +853,14 @@
         object-position: var(--hero-object-position, center bottom) !important;
         display: block;
       }
-      header#top .hero-overlay {
-        pointer-events: none;
+      header#top .hero-overlay{
+        pointer-events:none;
+        position:absolute; inset:0;
+        background:linear-gradient(180deg,
+          rgba(255,248,240,0.00) 0%,
+          rgba(255,248,240,0.06) 45%,
+          rgba(255,248,240,0.12) 70%,
+          rgba(255,248,240,0.18) 100%);
       }
     </style>
 
@@ -777,6 +903,7 @@
               var h = sticky.getBoundingClientRect().height || sticky.offsetHeight || 64;
               document.documentElement.style.setProperty('--sticky-h', h + 'px');
               hero.style.paddingBottom = '0px';
+              hero.style.marginTop = h + 'px';
             }
 
             // Ensure RSVP element is explicitly tagged so CSS can force white text
