@@ -40,18 +40,18 @@ const CONFIG = {
   colors: { bg: "#F8F5EF", accent: "#F3EEE6", primary: "#1F4C49", secondary: "#123417", highlight: "#7E3A22", text: "#1A1E23", wine: "#461326", plum: "#3E0B4D" },
   hero: {
     tagline: "Friday, October 16th 2026",
-    backgroundUrl: "img/DSCF8106.jpg",
+    backgroundUrl: "img/steph_1.jpg",
     height: { mobile: "95vh", desktop: "110vh" },
-    focus: "50% 55%",
-    scale: 0.9,
+    focus: "left center",
+    scale: 1,
     content: {
-      align: "flex-start",
-      justify: "flex-start",
+      align: "center",
+      justify: "center",
       paddingTop: "var(--sticky-h, 20px)",
       paddingBottom: "3rem",
       paddingLeft: "0",
       paddingRight: "0",
-      textAlign: "left",
+      textAlign: "right",
       gap: "0rem"
     }
   },
@@ -382,35 +382,36 @@ function App(){
       <div className="page-ornament left" />
       <div className="page-ornament right" />
       <div style={{height: '100%', background: `linear-gradient(180deg, ${palette.bg} 0%, ${palette.accent} 100%)`, color: palette.text}}>
-        <div className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b border-black/10">
-          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between" style={{ fontFamily: "'Italiana','Lora',serif", fontSize: '1.2rem', fontWeight: 600 }}>
-            <a href="#" onClick={(e)=>{e.preventDefault(); go('home');}} className="tracking-wide" style={{ fontSize: 'inherit', fontWeight: 'inherit' }}>Home</a>
+        <div className="sticky top-0 z-40 border-b border-black/10" style={{ background: 'linear-gradient(90deg, #fff8f0 0%, #f3eee6 100%)', boxShadow: '0 10px 25px rgba(70,19,38,0.10)', backdropFilter: 'blur(14px)', borderBottom: '2px solid #caa45a' }}>
+          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between" style={{ fontFamily: "'Italiana','Lora',serif", fontSize: '1.35rem', fontWeight: 700, letterSpacing: '.04em' }}>
+            <a href="#" onClick={(e)=>{e.preventDefault(); go('home');}} className="tracking-wide nouveau-script" style={{ color: '#4b2e83', fontSize: 'inherit', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(202,164,90,0.08)' }}>Home</a>
             <nav className="hidden md:flex items-center gap-6 nav-links" style={{ fontSize: 'inherit', fontWeight: 'inherit' }}>
-              <a href="#" onClick={(e)=>{e.preventDefault(); go('details');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>Details</a>
-              {CONFIG.sections.schedule && <a href="#" onClick={(e)=>{e.preventDefault(); go('schedule');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>Schedule</a>}
-              {CONFIG.sections.travel && <a href="#" onClick={(e)=>{e.preventDefault(); go('travel');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>Travel</a>}
-              {CONFIG.sections.accommodations && <a href="#" onClick={(e)=>{e.preventDefault(); go('accommodations');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>Stay</a>}
-              {CONFIG.sections.registry && <a href="#" onClick={(e)=>{e.preventDefault(); go('registry');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>Registry</a>}
-              {CONFIG.sections.gallery && <a href="#" onClick={(e)=>{e.preventDefault(); go('gallery');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>Gallery</a>}
-              {CONFIG.sections.faq && <a href="#" onClick={(e)=>{e.preventDefault(); go('faq');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>FAQ</a>}
-              {CONFIG.sections.updates && <a href="#" onClick={(e)=>{e.preventDefault(); go('updates');}} className="hover:opacity-80" style={{ fontWeight: 'inherit' }}>Updates</a>}
+              <a href="#" onClick={(e)=>{e.preventDefault(); go('details');}} className="nouveau-script" style={{ color: '#1F4C49', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(31,76,73,0.06)' }}>Details</a>
+              {CONFIG.sections.schedule && <a href="#" onClick={(e)=>{e.preventDefault(); go('schedule');}} className="nouveau-script" style={{ color: '#4b2e83', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(75,46,131,0.06)' }}>Schedule</a>}
+              {CONFIG.sections.travel && <a href="#" onClick={(e)=>{e.preventDefault(); go('travel');}} className="nouveau-script" style={{ color: '#caa45a', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(202,164,90,0.08)' }}>Travel</a>}
+              {CONFIG.sections.accommodations && <a href="#" onClick={(e)=>{e.preventDefault(); go('accommodations');}} className="nouveau-script" style={{ color: '#461326', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(70,19,38,0.08)' }}>Stay</a>}
+              {CONFIG.sections.registry && <a href="#" onClick={(e)=>{e.preventDefault(); go('registry');}} className="nouveau-script" style={{ color: '#7E3A22', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(126,58,34,0.08)' }}>Registry</a>}
+              {CONFIG.sections.gallery && <a href="#" onClick={(e)=>{e.preventDefault(); go('gallery');}} className="nouveau-script" style={{ color: '#0c3c78', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(12,60,120,0.08)' }}>Gallery</a>}
+              {CONFIG.sections.faq && <a href="#" onClick={(e)=>{e.preventDefault(); go('faq');}} className="nouveau-script" style={{ color: '#5a0e2e', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(90,14,46,0.08)' }}>FAQ</a>}
+              {CONFIG.sections.updates && <a href="#" onClick={(e)=>{e.preventDefault(); go('updates');}} className="nouveau-script" style={{ color: '#0f6a5b', fontWeight: 'inherit', padding: '0.5rem 1.2rem', borderRadius: '999px', transition: 'background 180ms', background: 'rgba(15,106,91,0.08)' }}>Updates</a>}
             </nav>
-            <Button className="hidden md:inline-flex btn-primary rsvp-btn" style={{ backgroundColor: palette.primary, fontFamily: "'Italiana','Lora',serif", fontSize: '1.2rem', fontWeight: 600 }} onClick={()=>go('rsvp')}>RSVP</Button>
+            <Button className="hidden md:inline-flex btn-primary rsvp-btn nouveau-script" style={{ backgroundColor: palette.primary, fontFamily: "'Italiana','Lora',serif", fontSize: '1.35rem', fontWeight: 700, letterSpacing: '.04em', borderRadius: '999px', boxShadow: '0 8px 18px rgba(31,76,73,0.18)' }} onClick={()=>go('rsvp')}>RSVP</Button>
           </div>
         </div>
 
         {page==='home' && (
           <header id="top" className="relative" style={heroStyleVars}>
-            <div className="hero-media absolute inset-0">
-              <img src={CONFIG.hero.backgroundUrl} alt="Hero" onError={(e) => (e.currentTarget.src = FALLBACKS.hero)} className="hero-img" />
-              <div className="hero-overlay absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)" }} />
-              <Ornament className="absolute top-4 left-4 w-24 h-24 opacity-20" color="#ffffff" />
-              <Ornament className="absolute bottom-4 right-4 w-24 h-24 opacity-[.15] rotate-180" color="#ffffff" />
-            </div>
-            <div className="relative max-w-5xl mx-auto px-4 hero-inner flex flex-col" style={heroContentStyle}>
-              <h1 className="text-4xl md:text-6xl font-normal tracking-wide drop-shadow-md text-white" style={{ fontFamily: "'Italiana','Lora',serif", animation: 'fadeIn 600ms ease both', margin: '0', marginBottom: '0.25rem' }}>{CONFIG.couple.primaryNames}</h1>
-              <p className="text-lg md:text-xl max-w-2xl text-white/90" style={{ animation: 'fadeIn 700ms ease both', marginTop: '0' }}>{CONFIG.hero.tagline}</p>
-              <div className="mt-4 opacity-80"><HeroFlourish /></div>
+            <div className="hero-inner grid md:grid-cols-2 h-full max-w-6xl mx-auto px-4 items-center" style={{ minHeight: '100%', height: '100%' }}>
+              <div className="hero-media frame-nouveau flex items-center justify-center h-full" style={{ background: 'rgba(255,248,240,0.7)', height: '100%' }}>
+                <img src={CONFIG.hero.backgroundUrl} alt="Hero" onError={(e) => (e.currentTarget.src = FALLBACKS.hero)} className="hero-img" style={{ borderRadius: '32px', boxShadow: '0 18px 32px rgba(31,76,73,0.22)', objectFit: 'cover', objectPosition: heroObjectPosition, height: '100%', width: '100%' }} />
+                <Ornament className="absolute top-4 left-4 w-24 h-24 opacity-20" color="#caa45a" />
+                <Ornament className="absolute bottom-4 right-4 w-24 h-24 opacity-[.15] rotate-180" color="#4b2e83" />
+              </div>
+              <div className="flex flex-col justify-center items-start h-full pl-8 pr-2" style={{ textAlign: 'right' }}>
+                <h1 className="text-6xl md:text-7xl font-normal tracking-tight drop-shadow-md nouveau-script" style={{ color: '#4b2e83', fontFamily: "'Italiana','Lora',serif", animation: 'fadeIn 600ms ease both', margin: '0', marginBottom: '0.5rem', lineHeight: '1.08' }}>{CONFIG.couple.primaryNames}</h1>
+                <p className="text-3xl md:text-4xl font-normal nouveau-script" style={{ color: '#1F4C49', animation: 'fadeIn 700ms ease both', marginTop: '0', marginBottom: '1.5rem', lineHeight: '1.18' }}>{CONFIG.hero.tagline}</p>
+                <div className="mt-4 opacity-90 flex justify-end"><HeroFlourish color="#caa45a" /></div>
+              </div>
             </div>
           </header>
         )}
