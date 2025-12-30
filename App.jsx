@@ -402,8 +402,8 @@ function App(){
         {page==='home' && (
           <header id="top" className="relative" style={heroStyleVars}>
             <div 
-              className="hero-inner flex flex-col md:flex-row h-[80vh] md:h-[90vh] w-full max-w-7xl mx-auto"
-              style={{ minHeight: '400px', height: 'clamp(400px,80vh,900px)' }}
+              className="hero-inner flex flex-col md:flex-row h-[80vh] md:h-[90vh] w-screen"
+              style={{ minHeight: '400px', height: 'clamp(400px,80vh,900px)', maxWidth: '100vw', margin: 0 }}
             >
               {/* Left: Image fills left half, always covers */}
               <div 
@@ -435,6 +435,7 @@ function App(){
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'flex-end',
+                  marginRight: '32px', // move text left by ~1/2 inch
                 }}
               >
                 <h1 className="text-4xl md:text-6xl font-normal tracking-tight drop-shadow-md nouveau-script" style={{ color: '#4b2e83', fontFamily: "'Italiana','Lora',serif", animation: 'fadeIn 600ms ease both', margin: '0', marginBottom: '0.5rem', lineHeight: '1.08' }}>{CONFIG.couple.primaryNames}</h1>
