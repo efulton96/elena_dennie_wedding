@@ -401,38 +401,44 @@ function App(){
 
         {page==='home' && (
           <header id="top" className="relative" style={heroStyleVars}>
-            <div className="hero-inner grid md:grid-cols-2 h-full max-w-6xl mx-auto px-0 items-stretch" style={{ minHeight: '100%', height: '100%' }}>
-              {/* Left: Image fills left half, no background overlay */}
-              <div className="hero-media frame-nouveau relative flex items-stretch justify-stretch h-full w-full overflow-hidden" style={{ minHeight: '350px', height: '100%' }}>
-                <img 
-                  src={CONFIG.hero.backgroundUrl} 
-                  alt="Hero" 
-                  onError={(e) => (e.currentTarget.src = FALLBACKS.hero)} 
-                  className="hero-img" 
-                  style={{ objectFit: 'cover', objectPosition: heroObjectPosition, width: '100%', height: '100%', minHeight: '350px' }} 
+            <div 
+              className="hero-inner flex flex-col md:flex-row h-[80vh] md:h-[90vh] w-full max-w-7xl mx-auto"
+              style={{ minHeight: '400px', height: 'clamp(400px,80vh,900px)' }}
+            >
+              {/* Left: Image fills left half, always covers */}
+              <div 
+                className="hero-media relative w-full md:w-1/2 h-64 md:h-full overflow-hidden"
+                style={{ minHeight: '300px', height: '100%' }}
+              >
+                <img
+                  src={CONFIG.hero.backgroundUrl}
+                  alt="Hero"
+                  onError={(e) => (e.currentTarget.src = FALLBACKS.hero)}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ objectPosition: heroObjectPosition, minHeight: '300px' }}
                 />
                 <Ornament className="absolute top-4 left-4 w-24 h-24 opacity-20" color="#caa45a" />
                 <Ornament className="absolute bottom-4 right-4 w-24 h-24 opacity-[.15] rotate-180" color="#4b2e83" />
               </div>
-              {/* Right: Text on clean background */}
-              <div className="flex flex-col justify-center items-start h-full pl-8 pr-2" 
-                style={{ 
-                  textAlign: 'right', 
-                  background: 'rgba(255,255,255,0.96)', 
-                  borderTopRightRadius: '2rem', 
-                  borderBottomRightRadius: '2rem', 
+              {/* Right: Text on clean background, vertically centered */}
+              <div
+                className="flex flex-col justify-center items-end w-full md:w-1/2 px-6 md:px-12 py-8 md:py-0"
+                style={{
+                  background: 'rgba(255,255,255,0.98)',
+                  borderTopRightRadius: '2rem',
+                  borderBottomRightRadius: '2rem',
                   boxShadow: '0 8px 32px rgba(31,76,73,0.10)',
-                  minHeight: '350px',
-                  paddingTop: '3rem',
-                  paddingBottom: '3rem',
+                  minHeight: '300px',
+                  height: '100%',
+                  textAlign: 'right',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'flex-end',
                 }}
               >
-                <h1 className="text-5xl md:text-6xl font-normal tracking-tight drop-shadow-md nouveau-script" style={{ color: '#4b2e83', fontFamily: "'Italiana','Lora',serif", animation: 'fadeIn 600ms ease both', margin: '0', marginBottom: '0.5rem', lineHeight: '1.08' }}>{CONFIG.couple.primaryNames}</h1>
-                <p className="text-2xl md:text-3xl font-normal nouveau-script" style={{ color: '#1F4C49', animation: 'fadeIn 700ms ease both', marginTop: '0', marginBottom: '1.5rem', lineHeight: '1.18' }}>{CONFIG.hero.tagline}</p>
+                <h1 className="text-4xl md:text-6xl font-normal tracking-tight drop-shadow-md nouveau-script" style={{ color: '#4b2e83', fontFamily: "'Italiana','Lora',serif", animation: 'fadeIn 600ms ease both', margin: '0', marginBottom: '0.5rem', lineHeight: '1.08' }}>{CONFIG.couple.primaryNames}</h1>
+                <p className="text-xl md:text-3xl font-normal nouveau-script" style={{ color: '#1F4C49', animation: 'fadeIn 700ms ease both', marginTop: '0', marginBottom: '1.5rem', lineHeight: '1.18' }}>{CONFIG.hero.tagline}</p>
                 <div className="mt-4 opacity-90 flex justify-end"><HeroFlourish color="#caa45a" /></div>
               </div>
             </div>
