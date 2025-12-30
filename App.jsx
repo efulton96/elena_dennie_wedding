@@ -402,41 +402,67 @@ function App(){
         {page==='home' && (
           <header id="top" className="relative" style={heroStyleVars}>
             <div 
-              className="hero-inner flex flex-col md:flex-row h-[80vh] md:h-[90vh] w-screen"
-              style={{ minHeight: '400px', height: 'clamp(400px,80vh,900px)', maxWidth: '100vw', margin: 0 }}
+              className="hero-inner"
+              style={{ 
+                display: 'flex',
+                flexDirection: 'row',
+                minHeight: '600px',
+                height: 'auto',
+                width: '100%',
+                maxWidth: '100vw',
+                margin: 0
+              }}
             >
               {/* Left: Image fills left half, always covers */}
               <div 
-                className="hero-media relative w-full md:w-1/2 h-64 md:h-full overflow-hidden"
-                style={{ minHeight: '300px', height: '100%' }}
+                className="hero-media"
+                style={{ 
+                  width: '50%',
+                  minHeight: '600px',
+                  height: 'auto',
+                  position: 'relative',
+                  flexShrink: 0,
+                  overflow: 'hidden'
+                }}
               >
                 <img
                   src={CONFIG.hero.backgroundUrl}
                   alt="Hero"
                   onError={(e) => (e.currentTarget.src = FALLBACKS.hero)}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  style={{ objectPosition: heroObjectPosition, minHeight: '300px' }}
+                  style={{ 
+                    width: '100%',
+                    height: '100%',
+                    minHeight: '600px',
+                    objectFit: 'cover',
+                    objectPosition: heroObjectPosition,
+                    display: 'block'
+                  }}
                 />
                 <Ornament className="absolute top-4 left-4 w-24 h-24 opacity-20" color="#caa45a" />
                 <Ornament className="absolute bottom-4 right-4 w-24 h-24 opacity-[.15] rotate-180" color="#4b2e83" />
               </div>
               {/* Right: Text on clean background, vertically centered */}
               <div
-                className="flex flex-col justify-center items-end w-full md:w-1/2 py-8 md:py-0"
                 style={{
+                  width: '50%',
+                  minHeight: '600px',
                   background: 'rgba(255,255,255,0.98)',
                   borderTopRightRadius: '2rem',
                   borderBottomRightRadius: '2rem',
                   boxShadow: '0 8px 32px rgba(31,76,73,0.10)',
-                  minHeight: '300px',
-                  height: '100%',
-                  textAlign: 'right',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'flex-end',
-                  paddingLeft: '3rem',
-                  paddingRight: '3rem',
+                  paddingLeft: '6rem',
+                  paddingRight: '10rem',
+                  paddingTop: '2rem',
+                  paddingBottom: '2rem',
+                  textAlign: 'right',
+                  position: 'sticky',
+                  top: '80px',
+                  alignSelf: 'flex-start',
+                  maxHeight: 'calc(100vh - 100px)'
                 }}
               >
                 <h1 className="text-4xl md:text-6xl font-normal tracking-tight drop-shadow-md nouveau-script" style={{ color: '#4b2e83', fontFamily: "'Italiana','Lora',serif", animation: 'fadeIn 600ms ease both', margin: '0', marginBottom: '0.5rem', lineHeight: '1.08' }}>{CONFIG.couple.primaryNames}</h1>
