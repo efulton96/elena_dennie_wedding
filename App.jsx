@@ -422,7 +422,7 @@ function App(){
               </div>
               {/* Right: Text on clean background, vertically centered */}
               <div
-                className="flex flex-col justify-center items-end w-full md:w-1/2 px-6 md:px-12 py-8 md:py-0"
+                className="flex flex-col justify-center items-end w-full md:w-1/2 py-8 md:py-0"
                 style={{
                   background: 'rgba(255,255,255,0.98)',
                   borderTopRightRadius: '2rem',
@@ -435,7 +435,8 @@ function App(){
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'flex-end',
-                  marginRight: '32px', // move text left by ~1/2 inch
+                  paddingLeft: '3rem',
+                  paddingRight: '3rem',
                 }}
               >
                 <h1 className="text-4xl md:text-6xl font-normal tracking-tight drop-shadow-md nouveau-script" style={{ color: '#4b2e83', fontFamily: "'Italiana','Lora',serif", animation: 'fadeIn 600ms ease both', margin: '0', marginBottom: '0.5rem', lineHeight: '1.08' }}>{CONFIG.couple.primaryNames}</h1>
